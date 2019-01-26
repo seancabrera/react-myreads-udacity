@@ -18,14 +18,15 @@ class BooksApp extends React.Component {
       showSearchPage: false
     }
     this.changeShelf = this.changeShelf.bind(this);
+    this.getCurrentShelf = this.getCurrentShelf.bind(this);
     this.showSearchPage = this.showSearchPage.bind(this);
     this.hideSearchPage = this.hideSearchPage.bind(this);
   }
 
     componentDidMount() {
-    BooksAPI.getAll().then((books) => console.log(books));
-    BooksAPI.getAll().then((books) => this.setState({books: books}));
-  }
+      BooksAPI.getAll().then((books) => console.log(books));
+      BooksAPI.getAll().then((books) => this.setState({books: books}));
+    }
 
   changeShelf(book, newShelf) {
     var App = this;
@@ -33,7 +34,7 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, newShelf).then(() => {
       App.setState(state => {
         const changedBook = state.books.filter(prevStateBook => {
-          return prevStateBook === book
+          return prevStateBook.id === book.id;
         });
         if(changedBook[0]) {
           changedBook[0].shelf = newShelf;
@@ -45,6 +46,15 @@ class BooksApp extends React.Component {
         return state;
       });
     })
+  }
+
+  getCurrentShelf(book) {
+    const currentBook = this.state.books.filter(b => b.id === book.id);
+    if(currentBook[0]) {
+      return currentBook[0].shelf;
+    }
+
+    return 'none';
   }
 
   showSearchPage = function() {
@@ -62,6 +72,7 @@ class BooksApp extends React.Component {
           <Search
             hideSearchPage={this.hideSearchPage}
             onShelfChange={this.changeShelf}
+            getCurrentShelf={this.getCurrentShelf}
           /> :
           <BookShelves
             showSearchPage = {this.showSearchPage}

@@ -38,8 +38,20 @@ class Search extends React.Component {
   }
 
   updateSearchResults(results) {
-    const resultsWithThumbnails = results.filter(result => result.imageLinks && result.imageLinks.smallThumbnail);
-    this.setState({searchResults: resultsWithThumbnails});
+    results = this.filterResultsWithThumbnails(results);
+    results = this.getCurrentShelfForResults(results);
+    this.setState({searchResults: results});
+  }
+
+  filterResultsWithThumbnails(results) {
+    return results.filter(result => result.imageLinks && result.imageLinks.smallThumbnail);
+  }
+
+  getCurrentShelfForResults(results) {
+    return results.map(result => {
+      result.shelf = this.props.getCurrentShelf(result);
+      return result;
+    });
   }
 
   render() {
