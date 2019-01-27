@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import BookShelves from './BookShelves'
 import Search from './Search'
 import * as BooksAPI from './BooksAPI'
@@ -8,23 +9,13 @@ class BooksApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      /**
-       * TODO: Instead of using this state variable to keep track of which page
-       * we're on, use the URL in the browser's address bar. This will ensure that
-       * users can use the browser's back and forward buttons to navigate between
-       * pages, as well as provide a good URL they can bookmark and share.
-       */
-      books: [],
-      showSearchPage: false
+      books: []
     };
     this.changeShelf = this.changeShelf.bind(this);
     this.getCurrentShelf = this.getCurrentShelf.bind(this);
-    this.showSearchPage = this.showSearchPage.bind(this);
-    this.hideSearchPage = this.hideSearchPage.bind(this);
   }
 
   componentDidMount() {
-    BooksAPI.getAll().then((books) => console.log(books));
     BooksAPI.getAll().then((books) => this.setState({books: books}));
   }
 
@@ -55,28 +46,23 @@ class BooksApp extends React.Component {
     return 'none';
   }
 
-  showSearchPage = function() {
-    this.setState({showSearchPage: true});
-  }
-
-  hideSearchPage = function() {
-    this.setState({showSearchPage: false});
-  }
-
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ?
+        <Route exact path="/search" render={({history}) =>
           <Search
-            hideSearchPage={this.hideSearchPage}
+            hideSearchPage={() => history.push("/")}
             onShelfChange={this.changeShelf}
             getCurrentShelf={this.getCurrentShelf}
-          /> :
+          />
+        }/>
+        <Route exact path="/" render={({history}) =>
           <BookShelves
-            showSearchPage = {this.showSearchPage}
+            showSearchPage = {() => history.push("/search")}
             onShelfChange={this.changeShelf}
             books={this.state.books}
-          />}
+          />
+        }/>
       </div>
     )
   }
