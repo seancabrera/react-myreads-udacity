@@ -16,23 +16,21 @@ class BooksApp extends React.Component {
        */
       books: [],
       showSearchPage: false
-    }
+    };
     this.changeShelf = this.changeShelf.bind(this);
     this.getCurrentShelf = this.getCurrentShelf.bind(this);
     this.showSearchPage = this.showSearchPage.bind(this);
     this.hideSearchPage = this.hideSearchPage.bind(this);
   }
 
-    componentDidMount() {
-      BooksAPI.getAll().then((books) => console.log(books));
-      BooksAPI.getAll().then((books) => this.setState({books: books}));
-    }
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => console.log(books));
+    BooksAPI.getAll().then((books) => this.setState({books: books}));
+  }
 
   changeShelf(book, newShelf) {
-    var App = this;
-
     BooksAPI.update(book, newShelf).then(() => {
-      App.setState(state => {
+      this.setState(state => {
         const changedBook = state.books.filter(prevStateBook => {
           return prevStateBook.id === book.id;
         });

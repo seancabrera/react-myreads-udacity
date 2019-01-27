@@ -4,8 +4,8 @@ import BookShelfChanger from './BookShelfChanger'
 class Book extends React.Component {
   render() {
     const authors = this.props.book.authors ?
-    this.props.book.authors.join(', ') :
-    '';
+      this.props.book.authors.join(', ') :
+      '';
 
     return (
       <div className="book">
