@@ -9,7 +9,7 @@ The goal of this project was to use React to create a "MyReads" app that allows 
 
 To run this project locally, first clone or download the project:
 
-`git clone https://github.com/seancabrera/reactnd-project-myreads-starter`
+`git clone https://github.com/seancabrera/reactnd-myreads-udacity`
 
 Then, in a terminal, navigate to the downloaded repository and use run the following npm commands:
 
