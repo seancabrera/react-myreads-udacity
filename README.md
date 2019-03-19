@@ -8,7 +8,7 @@ The goal of this project was to use React to create a "MyReads" app that allows 
 ## Live Demo
 https://udacity-myreads-cabrera.herokuapp.com/
 
-## Instructions
+## Local Build Instructions
 
 To run this project locally, first clone or download the project:
 
